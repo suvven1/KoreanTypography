@@ -17,11 +17,11 @@ const SelectImg = ({ close }) => {
     return (
         <SelectBox>
             <div className='imgBox'>
-                <div className='firstImg image' onClick={() => changeImg(`${process.env.PUBLIC_URL}/images/testImg.png`, 'yupmoon', 'white')}></div>
+                <div className='firstImg image' onClick={() => changeImg(`${process.env.PUBLIC_URL}/images/testImg.png`, 'yupmoon', '#ffffff')}></div>
                 <div className='title'>엽문</div>
             </div>
             <div className='imgBox'>
-                <div className='secondImg image' onClick={() => changeImg('https://pds.skyedaily.com/news_data2019/20211101180306_zgvezkoy.jpg', 'saejong', 'black')}></div>
+                <div className='secondImg image' onClick={() => changeImg('https://pds.skyedaily.com/news_data2019/20211101180306_zgvezkoy.jpg', 'saejong', '#000000')}></div>
                 <div className='title'>세종대왕</div>
             </div>
         </SelectBox>

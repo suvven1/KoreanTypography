@@ -156,7 +156,7 @@ height: 600px;
     font-size: 25px;
     font-weight: bold;
     color: ${props => props.width};
-    background-color: #c2c2c279;
+    background-color: ${props => props.width + '50'};
     border-radius: 10px;
 }
 

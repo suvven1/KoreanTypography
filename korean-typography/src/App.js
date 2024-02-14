@@ -15,7 +15,7 @@ function App() {
         imgType: 'yupmoon',
         replace: false,
         inputText: "",
-        color: 'white'
+        color: '#ffffff'
       }));
       window.location.replace('/')
     }
@@ -31,7 +31,7 @@ function App() {
   return (
     <TypoContext.Provider value={typoData}>
       <MainContainer>
-        <Title>자모 타이포그래피</Title>
+        <Title></Title>
         <Typography />
         <div className="SideBar">
           <SideBar width={500} close={close} closeSet={closeMenu}>
@@ -65,4 +65,5 @@ const Title = styled.div`
   font-size: 40px;
   font-weight: bold;
   margin-bottom: 20px;
+  height: 50px;
 `
