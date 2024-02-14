@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import styled from 'styled-components';
+import { TypoContext } from '../contexts/TypoContext';
 const typo = require('../utils/typography')
 
-const Typography = ({ replace }) => {
+const Typography = () => {
+    const typoData = useContext(TypoContext);
     const [points, setPoints] = useState([]);
     const [isDrawing, setIsDrawing] = useState(false);
     useEffect(() => {
@@ -43,13 +45,16 @@ const Typography = ({ replace }) => {
     let gap = 0
     let top = 5;
     useEffect(() => {
-        if (replace) {
-            setRes(typo.textDestroy(replace));
+        if (typoData.replace) {
+            setRes(typo.textDestroy(typoData.inputText, typoData.imgType));
             setTextResult("")
             setOpacity("")
             setStart(true)
+            typoData.replace = false
+            typoData.inputText = ""
+            localStorage.setItem('typoData', JSON.stringify(typoData))
         }
-    }, [replace])
+    }, [])
 
     useEffect(() => {
         setTimeout(() => {
@@ -58,13 +63,16 @@ const Typography = ({ replace }) => {
             }
         }, 2000)
     }, [res])
+
+
     return (
         <Box color={opacity}
+            width={typoData.color}
             onMouseDown={handleMouseDown}
             onMouseMove={handleMouseMove}
             onMouseUp={handleMouseUp}
         >
-            <ImgContainer>
+            <ImgContainer color={typoData?.imgUrl}>
                 <polyline
                     points={points.map(point => `${point.x},${point.y}`).join(' ')}
                     fill="none"
@@ -72,6 +80,7 @@ const Typography = ({ replace }) => {
                     strokeWidth="5"
                 />
             </ImgContainer>
+            <div className="hiddenBox"></div>
             <div className='textResult'>
                 {textResult}
             </div>
@@ -86,9 +95,8 @@ const Typography = ({ replace }) => {
                             key={index}
                         >
                             {boxes.korArr.map((box) => {
-                                // console.log(gap);
                                 moveDelay += 0.3
-                                let move = start ? { top: box[1], left: box[2] } : { transition: `all ${2}s ease-in-out ${moveDelay}s`, animation: `rotate ${0.5}s linear ${moveDelay}s infinite`, top: `${top}px`, left: `${380 + gap * 8}px` }
+                                let move = start ? { top: box[1], left: box[2] } : { transition: `all ${1.5}s ease-in-out ${moveDelay}s`, animation: `rotate ${0.5}s linear ${moveDelay}s infinite`, top: `${top}px`, left: `${380 + gap * 8}px` }
                                 num++
                                 gap++
                                 return (
@@ -116,7 +124,7 @@ const ImgContainer = styled.svg`
 width: 600px;
 height: 600px;
 border-radius: 10px;
-background-image: url(${process.env.PUBLIC_URL}/images/testImg.png);
+background-image: url(${props => props.color});
 background-size: cover;
 background-position: center;
 
@@ -128,6 +136,16 @@ position: relative;
 width: 600px;
 height: 600px;
 
+& .hiddenBox{
+    width: 30px;
+    height: 30px;
+    background-color: #BDBDBD;
+    border-radius: 50%;
+    position: absolute;
+    top:570px;
+    z-index: 10;
+}
+
 & .textResult{
     padding: 10px;
     width: 200px;
@@ -137,14 +155,14 @@ height: 600px;
     right: 10px;
     font-size: 25px;
     font-weight: bold;
-    color: white;
+    color: ${props => props.width};
     background-color: #c2c2c279;
     border-radius: 10px;
 }
 
 & .box {
   font-size:25px;
-  color: white;
+  color: ${props => props.width};
   font-weight: bold;
   position: absolute;
 }

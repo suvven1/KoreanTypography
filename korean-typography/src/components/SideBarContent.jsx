@@ -1,35 +1,34 @@
-import React, { useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import styled from 'styled-components'
-
-const SideBarContent = ({ setReplaceState, close }) => {
+import SelectImg from './SelectImg'
+import { TypoContext } from '../contexts/TypoContext'
+const typo = require('../utils/typography')
+const SideBarContent = ({ close }) => {
+    const typoData = useContext(TypoContext);
     const [inputText, setInputText] = useState("")
     const replaceBox = () => {
         close(true)
         setTimeout(() => {
-            setReplaceState(inputText)
+            typoData.replace = true;
+            typoData.inputText = inputText;
+            localStorage.setItem('typoData', JSON.stringify(typoData))
+            window.location.replace('/')
         }, 500)
     }
+    const [selectOpen, setSelectOpen] = useState(false)
+    const openSelectImg = () => {
+        setSelectOpen(!selectOpen)
+    }
+
     return (
         <Contents>
-            <textarea cols="25" rows="19" placeholder='텍스트를 입력해주세요.' onChange={(e) => { setInputText(e.target.value) }}></textarea>
+            {selectOpen ? <SelectImg close={close} setSelectOpen={setSelectOpen} /> :
+                <textarea cols="25" rows="19" placeholder='텍스트를 입력해주세요.' onChange={(e) => { setInputText(e.target.value) }}></textarea>
+            }
             <div className='btnBox'>
-                <button >업로드</button>
-                <button onClick={replaceBox}>시작</button>
+                <button onClick={openSelectImg}>{selectOpen ? '이전' : '사진선택'}</button>
+                <button onClick={replaceBox} disabled={selectOpen}>시작</button>
             </div>
-
-            {/* <div style={{ margin: '0 0 10px 0', fontSize: '20px', fontWeight: 'bold', alignSelf: 'start' }}>입력</div>
-            <div style={{ display: 'flex', justifyContent: 'center' }}>
-                <input type="text" value={textTest} onChange={(e) => { setTextTest(e.target.value) }} style={{ width: "320px", height: "30px", paddingLeft: '10px', fontSize: '20px' }} />
-                <button onClick={textDestroy} style={{ width: "70px", height: "35px", margin: '0 0 30px 10px', fontSize: '18px' }}>추출</button>
-            </div>
-            <div style={{ margin: '0 0 10px 0', fontSize: '20px', fontWeight: 'bold', alignSelf: 'start' }}>출력</div>
-            <div style={{ display: 'flex', justifyContent: 'center' }}>
-                <div style={{ display: 'flex', alignItems: 'center', width: '325px', height: "35px", border: "1px solid black", paddingLeft: '10px', fontSize: '20px', backgroundColor: 'white' }}>{textResult}</div>
-                <button onClick={replaceBox} style={{ width: "70px", height: "35px", margin: '0 0 30px 10px', fontSize: '18px' }}>정렬</button>
-            </div>
-
-
-            <button onClick={() => window.location.replace('/')} style={{ width: "70px", height: "35px", margin: '20px 0 -10px 0', fontSize: '18px' }}>초기화</button> */}
         </Contents>
     )
 }
@@ -43,15 +42,17 @@ const Contents = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: end;
+    position: relative;
 
     & textarea{
+        height: 400px;
         padding: 10px;
         font-size: 20px;
         resize: none;
     }
 
     & .btnBox{
-        justify-self:end;
+        /* justify-self:end; */
         & button{
             width: 150px;
             height: 60px;

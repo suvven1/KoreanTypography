@@ -47,9 +47,6 @@ const SideBar = ({ width = 280, children, close, closeSet }) => {
     });
 
     return (
-        // <div style={{ display: 'flex', flexDirection: 'column', width: '40%', alignItems: "center", border: '3px solid black', padding: '30px', marginTop: '60px', backgroundColor: '#bdbdbd' }}>
-
-        // </div>
         <SideBarBox>
             <SideBarView
                 ref={side}
@@ -60,16 +57,6 @@ const SideBar = ({ width = 280, children, close, closeSet }) => {
                 }}
             >
                 <div onClick={toggleMenu} className="btnSideBar btnOn">ㄱ</div>
-                {/* {isOpen ? (
-                    <div onClick={toggleMenu} className="btnSideBar btnOn"></div>
-                ) : (
-                    <img
-                        src={`${process.env.PUBLIC_URL}/images/Menu.png`}
-                        onClick={toggleMenu}
-                        alt=""
-                        className="btnSideBar btnOff"
-                    />
-                )} */}
                 {/* 사이드바 컴포넌트 내부 값이 구현되는 위치 */}
                 <SideBarContents>{children}</SideBarContents>
             </SideBarView>
@@ -80,7 +67,7 @@ const SideBar = ({ width = 280, children, close, closeSet }) => {
 export default SideBar
 
 const SideBarBox = styled.div`
-  /* background-color: aliceblue; */
+
 `;
 
 const SideBarView = styled.div`
@@ -101,9 +88,8 @@ const SideBarView = styled.div`
     background-color: white;
     /* border: 1px solid black; */
     border-radius: 50%;
-    position: relative;
-    top: 15px;
-    left: 15px;
+    position: absolute;
+    margin: 15px 0 0 15px;
     width: 50px;
     height: 50px;
     font-size:35px;
@@ -117,20 +103,11 @@ const SideBarView = styled.div`
     background-color: black;
     color: white;
   }
-
-  & .btnOff {
-    left: -55px;
-    /* background-color: white;
-    border-radius: 50%; */
-  }
-  & .btnOn {
-    /* left: 300px; */
-  }
 `;
 
 const SideBarContents = styled.div`
-  position: relative;
-  top: -35px;
+  position: absolute;
+  top: 0px;
   height: 100vh;
   width: 100%;
 `;

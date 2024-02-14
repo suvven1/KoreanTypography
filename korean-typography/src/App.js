@@ -3,8 +3,24 @@ import styled from 'styled-components';
 import SideBar from './components/SideBar';
 import SideBarContent from './components/SideBarContent';
 import Typography from './components/Typography';
+import { TypoContext } from './contexts/TypoContext';
 const typo = require('./utils/typography')
 function App() {
+  const typoData = JSON.parse(localStorage.getItem("typoData"));
+
+  useEffect(() => {
+    if (typoData == null) {
+      localStorage.setItem("typoData", JSON.stringify({
+        imgUrl: `${process.env.PUBLIC_URL}/images/testImg.png`,
+        imgType: 'yupmoon',
+        replace: false,
+        inputText: "",
+        color: 'white'
+      }));
+      window.location.replace('/')
+    }
+
+  }, [])
 
   // 사이드바 열고 닫기
   const [close, setClose] = useState(false);
@@ -12,21 +28,18 @@ function App() {
     setClose(e);
   };
 
-  const [replace, setReplace] = useState(false)
-  const setReplaceState = (state) => {
-    setReplace(state)
-  }
-
   return (
-    <MainContainer>
-      <Title>자모 타이포그래피</Title>
-      <Typography replace={replace} />
-      <div className="SideBar">
-        <SideBar width={500} close={close} closeSet={closeMenu}>
-          <SideBarContent close={closeMenu} setReplaceState={setReplaceState} />
-        </SideBar>
-      </div>
-    </MainContainer>
+    <TypoContext.Provider value={typoData}>
+      <MainContainer>
+        <Title>자모 타이포그래피</Title>
+        <Typography />
+        <div className="SideBar">
+          <SideBar width={500} close={close} closeSet={closeMenu}>
+            <SideBarContent close={closeMenu} />
+          </SideBar>
+        </div>
+      </MainContainer>
+    </TypoContext.Provider>
   );
 }
 
