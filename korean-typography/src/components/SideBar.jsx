@@ -47,19 +47,17 @@ const SideBar = ({ width = 280, children, close, closeSet }) => {
     });
 
     return (
-        <SideBarBox>
-            <SideBarView
-                ref={side}
-                style={{
-                    width: `${width}px`,
-                    height: "100%",
-                    transform: `translatex(${-xPosition}px)`,
-                }}
-            >
-                <div onClick={toggleMenu} className="btnSideBar btnOn">ㄱ</div>
-                {/* 사이드바 컴포넌트 내부 값이 구현되는 위치 */}
-                <SideBarContents>{children}</SideBarContents>
-            </SideBarView>
+        <SideBarBox
+            ref={side}
+            style={{
+                width: `${width}px`,
+                height: "100%",
+                transform: `translatex(${-xPosition}px)`,
+            }}
+        >
+            <div onClick={toggleMenu} className="btnSideBar btnOn">ㄱ</div>
+            {/* 사이드바 컴포넌트 내부 값이 구현되는 위치 */}
+            <SideBarContents>{children}</SideBarContents>
         </SideBarBox>
     )
 }
@@ -67,10 +65,6 @@ const SideBar = ({ width = 280, children, close, closeSet }) => {
 export default SideBar
 
 const SideBarBox = styled.div`
-
-`;
-
-const SideBarView = styled.div`
   background-color: grey;
   position: fixed;
   top: 0;

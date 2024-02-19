@@ -1,35 +1,17 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components';
 import SideBar from './components/SideBar';
 import SideBarContent from './components/SideBarContent';
 import Typography from './components/Typography';
-import { TypoContext } from './contexts/TypoContext';
-const typo = require('./utils/typography')
+import { TypoProvider } from './contexts/TypoContext';
 function App() {
-  const typoData = JSON.parse(localStorage.getItem("typoData"));
-
-  useEffect(() => {
-    if (typoData == null) {
-      localStorage.setItem("typoData", JSON.stringify({
-        imgUrl: `${process.env.PUBLIC_URL}/images/testImg.png`,
-        imgType: 'yupmoon',
-        replace: false,
-        inputText: "",
-        color: '#ffffff'
-      }));
-      window.location.replace('/')
-    }
-
-  }, [])
-
   // 사이드바 열고 닫기
   const [close, setClose] = useState(false);
   const closeMenu = (e) => {
     setClose(e);
   };
-
   return (
-    <TypoContext.Provider value={typoData}>
+    <TypoProvider>
       <MainContainer>
         <Title></Title>
         <Typography />
@@ -39,7 +21,7 @@ function App() {
           </SideBar>
         </div>
       </MainContainer>
-    </TypoContext.Provider>
+    </TypoProvider>
   );
 }
 
@@ -61,7 +43,6 @@ const MainContainer = styled.div`
   }
 `
 const Title = styled.div`
-  /* align-self: start; */
   font-size: 40px;
   font-weight: bold;
   margin-bottom: 20px;

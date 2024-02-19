@@ -1,19 +1,23 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import styled from 'styled-components'
-import { TypoContext } from '../contexts/TypoContext';
+import TypoContext from '../contexts/TypoContext';
 
-const SelectImg = ({ close }) => {
-    const typoData = useContext(TypoContext);
+const SelectImg = ({ close, setSelectOpen, setInputText }) => {
+    const { data, update } = useContext(TypoContext)
+
+    // 이미지 변경
     const changeImg = (url, type, color) => {
-        close(true)
-        typoData.imgUrl = url
-        typoData.imgType = type
-        typoData.color = color
-        localStorage.setItem('typoData', JSON.stringify(typoData))
-        setTimeout(() => {
-            window.location.replace('/')
-        }, [500])
+        setInputText("")
+        update({
+            ...data,
+            imgUrl: url,
+            imgType: type,
+            textBackgroudColor: color
+        })
+        const newImg = { url: url, type: type, textBackgroudColor: color }
+        sessionStorage.setItem('img', JSON.stringify(newImg))
     }
+
     return (
         <SelectBox>
             <div className='imgBox'>
@@ -46,6 +50,7 @@ const SelectBox = styled.div`
         height: 200px;
         background-size: cover;
         background-position: center;
+        filter: brightness(55%);
         border-radius: 10px;
         cursor: pointer;
     }
@@ -53,6 +58,7 @@ const SelectBox = styled.div`
     .image:hover {
         width: 210px;
         height: 210px;
+        filter: brightness(60%);
     }
 
     .imgBox{
