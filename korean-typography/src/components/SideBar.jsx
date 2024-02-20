@@ -1,18 +1,21 @@
 import React, { useEffect, useRef, useState } from 'react'
+import { IoIosOptions } from "react-icons/io";
 import styled from 'styled-components';
 
-const SideBar = ({ width = 280, children, close, closeSet }) => {
+const SideBar = ({ width, children, inputClose, closeInput }) => {
 
+    const xWidth = width - 75
     const [isOpen, setOpen] = useState(false);
-    const [xPosition, setX] = useState(-width + 80);
+    const [xPosition, setX] = useState(-xWidth);
     const side = useRef();
+
     // button 클릭 시 토글
     const toggleMenu = () => {
         if (xPosition < 0) {
             setX(0);
             setOpen(true);
         } else {
-            setX(-width + 80);
+            setX(-xWidth);
             setOpen(false);
         }
     };
@@ -20,21 +23,22 @@ const SideBar = ({ width = 280, children, close, closeSet }) => {
     //메뉴 닫기 함수
     const closeMenu = (e) => {
         if (e) {
-            setX(-width + 80);
+            setX(-xWidth);
             setOpen(false);
         }
     };
+
     useEffect(() => {
-        closeMenu(close);
-        closeSet(false);
-    }, [close]);
+        closeMenu(inputClose);
+        closeInput(false);
+    }, [inputClose]);
 
     // 사이드바 외부 클릭시 닫히는 함수
     const handleClose = async (e) => {
         let sideArea = side.current;
         let sideCildren = side.current.contains(e.target);
         if (isOpen && (!sideArea || !sideCildren)) {
-            await setX(-width + 80);
+            await setX(-xWidth);
             await setOpen(false);
         }
     };
@@ -52,10 +56,12 @@ const SideBar = ({ width = 280, children, close, closeSet }) => {
             style={{
                 width: `${width}px`,
                 height: "100%",
-                transform: `translatex(${-xPosition}px)`,
+                transform: `translatex(calc(${-xPosition}px))`,
             }}
         >
-            <div onClick={toggleMenu} className="btnSideBar btnOn">ㄱ</div>
+            <div style={{ height: '70px' }}></div>
+            <div onClick={toggleMenu} className="btnSideBar btnOn"><IoIosOptions />
+            </div>
             {/* 사이드바 컴포넌트 내부 값이 구현되는 위치 */}
             <SideBarContents>{children}</SideBarContents>
         </SideBarBox>
@@ -69,6 +75,7 @@ const SideBarBox = styled.div`
   position: fixed;
   top: 0;
   bottom: 0;
+  /* right: -315px; */
   right: 0;
   transition: 0.4s ease;
   color: #202020;

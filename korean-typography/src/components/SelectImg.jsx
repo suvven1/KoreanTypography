@@ -2,30 +2,29 @@ import React, { useContext, useState } from 'react'
 import styled from 'styled-components'
 import TypoContext from '../contexts/TypoContext';
 
-const SelectImg = ({ close, setSelectOpen, setInputText }) => {
+const SelectImg = ({ closeInput, setSelectOpen, setInputText }) => {
     const { data, update } = useContext(TypoContext)
 
     // 이미지 변경
-    const changeImg = (url, type, color) => {
+    const changeImg = (url, type) => {
         setInputText("")
         update({
             ...data,
             imgUrl: url,
-            imgType: type,
-            textBackgroudColor: color
+            imgType: type
         })
-        const newImg = { url: url, type: type, textBackgroudColor: color }
+        const newImg = { url: url, type: type }
         sessionStorage.setItem('img', JSON.stringify(newImg))
     }
 
     return (
         <SelectBox>
             <div className='imgBox'>
-                <div className='firstImg image' onClick={() => changeImg(`${process.env.PUBLIC_URL}/images/testImg.png`, 'yupmoon', '#ffffff')}></div>
+                <div className='firstImg image' onClick={() => changeImg(`${process.env.PUBLIC_URL}/images/testImg.png`, 'yupmoon')}></div>
                 <div className='title'>엽문</div>
             </div>
             <div className='imgBox'>
-                <div className='secondImg image' onClick={() => changeImg('https://pds.skyedaily.com/news_data2019/20211101180306_zgvezkoy.jpg', 'saejong', '#000000')}></div>
+                <div className='secondImg image' onClick={() => changeImg('https://pds.skyedaily.com/news_data2019/20211101180306_zgvezkoy.jpg', 'saejong')}></div>
                 <div className='title'>세종대왕</div>
             </div>
         </SelectBox>

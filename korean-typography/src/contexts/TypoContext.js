@@ -23,7 +23,6 @@ export const TypoProvider = ({ children }) => {
             imgType: img ? img.type : 'yupmoon',
             replace: false,
             inputText: "",
-            textBackgroudColor: img ? img.textBackgroudColor : '#ffffff',
             fontFamily: fontStyle ? fontStyle.family : '나눔고딕',
             fontSize: fontStyle ? fontStyle.size : '20px',
             fontColor: fontStyle ? fontStyle.color : 'white'

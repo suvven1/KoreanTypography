@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import styled from 'styled-components'
 import SelectImg from './SelectImg'
 import TypoContext from '../contexts/TypoContext'
-const SideBarContent = ({ close }) => {
+const SideBarContent = ({ closeInput }) => {
     const [fontStyle, setFontStyle] = useState(JSON.parse(sessionStorage.getItem('fontStyle')));
     const { data, update } = useContext(TypoContext)
     const [inputText, setInputText] = useState("")
@@ -10,7 +10,7 @@ const SideBarContent = ({ close }) => {
 
     // 입력한 텍스트 분해 및 이동 시작
     const replaceBox = () => {
-        close(true)
+        closeInput(true)
         setTimeout(() => {
             update({
                 ...data,
@@ -41,7 +41,7 @@ const SideBarContent = ({ close }) => {
 
     return (
         <Contents fontFamily={fontStyle?.family} fontSize={fontStyle?.size} color={fontStyle?.color}>
-            {selectOpen ? <SelectImg close={close} setSelectOpen={setSelectOpen} setInputText={setInputText} /> :
+            {selectOpen ? <SelectImg closeInput={closeInput} setSelectOpen={setSelectOpen} setInputText={setInputText} /> :
                 <>
                     <FontStyle fontFamily={fontStyle?.family}>
                         <div>글꼴</div>
