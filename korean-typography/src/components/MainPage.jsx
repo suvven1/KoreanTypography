@@ -35,7 +35,7 @@ const Start = styled.div`
 position: relative;
 cursor: pointer;
     & .img{
-        background-image: url(${process.env.PUBLIC_URL}/images/testImg.png);
+        background-image: url(${process.env.PUBLIC_URL}/images/test1.png);
         background-size: cover;
         background-position: center;
         display: flex;

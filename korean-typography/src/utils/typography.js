@@ -1,10 +1,3 @@
-let positionIndex = 0; // 좌표 인덱스
-
-// 이미지별 XY 좌표
-let saejongX = [30, 35, 45, 55, 70, 85, 110, 135, 165, 195, 225, 215, 210, 215, 220, 225, 235, 245, 265, 290, 315, 335, 345, 355, 360, 365, 370, 365, 355, 380, 410, 440, 470, 500, 505, 515, 525, 535, 540, 510, 480, 450, 420, 390, 360, 330, 300, 270, 240, 210, 180, 150, 120, 90, 60]
-let saejongY = [570, 540, 510, 480, 450, 420, 390, 375, 360, 345, 330, 300, 270, 235, 200, 170, 140, 115, 100, 115, 100, 115, 140, 170, 200, 235, 270, 300, 330, 345, 360, 375, 390, 420, 450, 480, 510, 540, 570, 570, 570, 570, 570, 570, 570, 570, 570, 570, 570, 570, 570, 570, 570, 570, 570]
-let yupmoonX = [10, 40, 70, 100, 120, 135, 120, 110, 110, 105, 110, 125, 150, 190, 240, 280, 315, 330, 330, 330, 325, 315, 300, 290, 290, 325, 360, 400, 420, 430, 450, 485, 520, 555, 575, 575, 575, 575, 545, 505, 480, 505, 535, 555, 570, 575, 535, 500, 465, 430, 400, 370, 340, 310, 280, 250, 220, 190, 160, 130, 100, 70, 40, 10, 5, 5, 0, 0, 0, 0]
-let yupmoonY = [355, 330, 315, 300, 265, 230, 205, 170, 135, 100, 65, 30, 5, 0, 0, 0, 20, 60, 100, 140, 180, 220, 255, 280, 310, 325, 325, 315, 280, 235, 205, 195, 195, 200, 240, 280, 320, 360, 385, 405, 425, 450, 470, 490, 520, 560, 570, 570, 570, 570, 570, 570, 570, 570, 570, 570, 570, 570, 570, 570, 570, 570, 570, 570, 540, 510, 480, 450, 420, 390]
 // 초성
 const first = ['ㄱ', 'ㄲ', 'ㄴ', 'ㄷ', 'ㄸ', 'ㄹ', 'ㅁ', 'ㅂ', 'ㅃ', 'ㅅ', 'ㅆ', 'ㅇ', 'ㅈ', 'ㅉ', 'ㅊ', 'ㅋ', 'ㅌ', 'ㅍ', 'ㅎ'];
 // 중성
@@ -15,11 +8,9 @@ const startKorean = 44032; // '가' 유니코드
 const lastKorean = 55203; // '힣' 유니코드
 
 // 자음 모음 분해 함수
-function getConstantVowel(kor, imgType) {
+function getConstantVowel(kor, imgSize) {
     let result = []; // 최종 결과
     let combinationResultArr = []; // 조합된 글자 배열
-    let XPosition; // 글자의 X좌표
-    let YPosition; // 글자의 Y좌표
 
     for (let i = 0; i < kor.length; i++) {
         let uni = kor[i].charCodeAt(0); // 입력한 글자 각각 유니코드로 변환
@@ -65,26 +56,10 @@ function getConstantVowel(kor, imgType) {
         }
         combinationResultArr.push(combinationResult);
 
-        // 이미지 종류에 따른 좌표 설정
-        if (imgType == 'yupmoon') {
-            XPosition = yupmoonX
-            YPosition = yupmoonY
-        } else {
-            XPosition = saejongX
-            YPosition = saejongY
-        }
-
-        // 조합된 글자 배열에 해당하는 좌표 설정
+        // 글자 랜덤 좌표 설정
         for (let i = 0; i < decompKorArr.length; i++) {
-            // 입력된 글자수가 지정된 좌표수를 초과시 고정좌표 지정 
-            if (YPosition.length <= positionIndex) {
-                decompKorArr[i].push(570);
-                decompKorArr[i].push(5);
-            } else {
-                decompKorArr[i].push(YPosition[positionIndex]);
-                decompKorArr[i].push(XPosition[positionIndex]);
-            }
-            positionIndex++;
+            decompKorArr[i].push(Math.random() * (imgSize[1] - 40))
+            decompKorArr[i].push(Math.random() * (imgSize[0] - 40))
         }
 
         result.push({
@@ -93,7 +68,6 @@ function getConstantVowel(kor, imgType) {
             combinationResult: combinationResult
         });
     }
-    positionIndex = 0
     return result;
 }
 

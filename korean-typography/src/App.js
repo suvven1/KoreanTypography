@@ -1,19 +1,18 @@
 import React, { useEffect, useRef, useState } from 'react'
 import styled from 'styled-components';
-import SideBar from './components/SideBar';
-import SideBarContent from './components/SideBarContent';
 import Typography from './components/Typography';
 import TypographyContent from './components/TypographyContent';
 import MainPage from './components/MainPage';
 import { TypoProvider } from './contexts/TypoContext';
 import Header from './components/Header';
 function App() {
-  // 사이드바 열고 닫기
+  // 타이포그래피 화면 열고 닫기
   const [typoClose, setTypoClose] = useState(false);
   const closeTypo = (e) => {
     setTypoClose(e);
   };
 
+  // sessionStorage.clear();
   return (
     <TypoProvider>
       <MainContainer>

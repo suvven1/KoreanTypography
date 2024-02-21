@@ -20,7 +20,7 @@ const SelectImg = ({ closeInput, setSelectOpen, setInputText }) => {
     return (
         <SelectBox>
             <div className='imgBox'>
-                <div className='firstImg image' onClick={() => changeImg(`${process.env.PUBLIC_URL}/images/testImg.png`, 'yupmoon')}></div>
+                <div className='firstImg image' onClick={() => changeImg(`${process.env.PUBLIC_URL}/images/test1.png`, 'yupmoon')}></div>
                 <div className='title'>엽문</div>
             </div>
             <div className='imgBox'>
@@ -78,7 +78,7 @@ const SelectBox = styled.div`
     }
 
     .firstImg {
-        background-image: url(${process.env.PUBLIC_URL}/images/testImg.png);
+        background-image: url(${process.env.PUBLIC_URL}/images/test1.png);
     }
     .secondImg {
         background-image: url(https://pds.skyedaily.com/news_data2019/20211101180306_zgvezkoy.jpg);

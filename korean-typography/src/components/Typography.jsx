@@ -39,7 +39,7 @@ const Typography = ({ width, children, typoClose, closeTypo }) => {
             {/* 사이드바 컴포넌트 내부 값이 구현되는 위치 */}
             <TypographyContent>{children}</TypographyContent>
             <div className="sideBar">
-                <SideBar width={700} inputClose={inputClose} closeInput={closeInput}>
+                <SideBar width={45} inputClose={inputClose} closeInput={closeInput}>
                     <SideBarContent closeInput={closeInput} />
                 </SideBar>
             </div>

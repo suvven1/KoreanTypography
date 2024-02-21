@@ -4,18 +4,18 @@ import styled from 'styled-components';
 
 const SideBar = ({ width, children, inputClose, closeInput }) => {
 
-    const xWidth = width - 75
+    const xWidth = `calc(${width}% + 46%)`
     const [isOpen, setOpen] = useState(false);
-    const [xPosition, setX] = useState(-xWidth);
+    const [xPosition, setX] = useState(xWidth);
     const side = useRef();
 
     // button 클릭 시 토글
     const toggleMenu = () => {
-        if (xPosition < 0) {
+        if (xPosition != 0) {
             setX(0);
             setOpen(true);
         } else {
-            setX(-xWidth);
+            setX(xWidth);
             setOpen(false);
         }
     };
@@ -23,7 +23,7 @@ const SideBar = ({ width, children, inputClose, closeInput }) => {
     //메뉴 닫기 함수
     const closeMenu = (e) => {
         if (e) {
-            setX(-xWidth);
+            setX(xWidth);
             setOpen(false);
         }
     };
@@ -38,7 +38,7 @@ const SideBar = ({ width, children, inputClose, closeInput }) => {
         let sideArea = side.current;
         let sideCildren = side.current.contains(e.target);
         if (isOpen && (!sideArea || !sideCildren)) {
-            await setX(-xWidth);
+            await setX(xWidth);
             await setOpen(false);
         }
     };
@@ -54,9 +54,9 @@ const SideBar = ({ width, children, inputClose, closeInput }) => {
         <SideBarBox
             ref={side}
             style={{
-                width: `${width}px`,
+                width: `${width}%`,
                 height: "100%",
-                transform: `translatex(calc(${-xPosition}px))`,
+                transform: `translatex(${xPosition})`,
             }}
         >
             <div style={{ height: '70px' }}></div>
@@ -71,7 +71,7 @@ const SideBar = ({ width, children, inputClose, closeInput }) => {
 export default SideBar
 
 const SideBarBox = styled.div`
-  background-color: grey;
+  background-color: #bed5ffa6;
   position: fixed;
   top: 0;
   bottom: 0;
@@ -81,6 +81,8 @@ const SideBarBox = styled.div`
   color: #202020;
   height: 100%;
   z-index: 99;
+
+  box-shadow: 10px 10px 50px 0px #6494ed88 inset;
 
   & .btnSideBar {
     display: flex;
@@ -101,7 +103,7 @@ const SideBarBox = styled.div`
   }
 
   & .btnSideBar:hover{
-    background-color: black;
+    background-color: lightgray;
     color: white;
   }
 `;
